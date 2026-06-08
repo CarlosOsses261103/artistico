@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>La IA Somos Nosotros</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Ir al puzzle">
+          <img class="brand-logo" src="imagenes/Escudo_UCM.png" alt="Logo UCM" />
+          <span>
+            <strong>Exposición interactiva</strong>
+            <small>Universidad Católica del Maule</small>
+          </span>
+        </a>
+
+        <nav class="top-actions" aria-label="Navegación principal">
+          <a class="nav-pill" href="./">Puzzle</a>
+          <button class="nav-pill ghost" id="changeUserButton" type="button">Visitante</button>
+        </nav>
+      </header>
+
+      <main>
+        <section class="login-panel" id="loginPanel" aria-labelledby="loginTitle">
+          <div class="login-card">
+            <p class="eyebrow">Ingreso de visitante</p>
+            <h1 id="loginTitle">Antes de comenzar</h1>
+            <form id="loginForm" class="login-form">
+              <label for="visitorName">Nombre</label>
+              <div class="login-row">
+                <input
+                  id="visitorName"
+                  name="visitorName"
+                  autocomplete="name"
+                  maxlength="40"
+                  required
+                  placeholder="Tu nombre"
+                />
+                <button type="submit">Entrar</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <section class="artwork-view hidden" id="artworkView" aria-live="polite">
+          <div class="art-layout">
+            <figure class="art-media">
+              <img id="artImage" alt="" />
+            </figure>
+
+            <article class="art-copy">
+              <p class="eyebrow" id="artSection"></p>
+              <h1 id="artTitle"></h1>
+              <p class="art-text" id="artText"></p>
+
+              <div class="audio-panel">
+                <div>
+                  <span class="audio-label">Voz IA</span>
+                  <p id="audioStatus">Lista para narrar</p>
+                </div>
+                <button class="primary-action" id="playAudioButton" type="button">
+                  <span class="play-icon" aria-hidden="true"></span>
+                  Escuchar
+                </button>
+              </div>
+
+              <div class="art-footer">
+                <span class="unlock-badge" id="unlockBadge">Pieza bloqueada</span>
+                <a class="secondary-action" href="./">Abrir puzzle</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="puzzle-view hidden" id="puzzleView">
+          <div class="puzzle-hero">
+            <div>
+              <p class="eyebrow">Mensaje oculto</p>
+              <h1>Reconstruye la secuencia</h1>
+            </div>
+            <div class="progress-box">
+              <span id="progressText">0/12</span>
+              <div class="progress-track" aria-hidden="true">
+                <span id="progressFill"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="puzzle-layout">
+            <section class="board-panel" aria-labelledby="boardTitle">
+              <div class="panel-heading">
+                <h2 id="boardTitle">Secuencia</h2>
+                <button class="small-button" id="resetPuzzleButton" type="button">Limpiar</button>
+              </div>
+              <div class="slot-grid" id="slotGrid" aria-label="Tablero del puzzle"></div>
+              <p class="revealed-message" id="revealedMessage">...</p>
+            </section>
+
+            <section class="pieces-panel" aria-labelledby="piecesTitle">
+              <div class="panel-heading">
+                <h2 id="piecesTitle">Obras</h2>
+                <span id="completionBadge">En proceso</span>
+              </div>
+              <div class="piece-grid" id="pieceGrid" aria-label="Piezas disponibles"></div>
+            </section>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-credit">Desarrollado por Carlos Osses Alfaro</footer>
+
+      <div class="celebration-overlay hidden" id="celebrationOverlay" role="dialog" aria-modal="true" aria-labelledby="celebrationTitle" aria-hidden="true">
+        <div class="celebration-card">
+          <p class="eyebrow">Objetivo completado</p>
+          <h2 id="celebrationTitle">Gracias por asistir a la exposición</h2>
+          <p class="celebration-copy">
+            Has reconstruido el mensaje oculto y completado el recorrido de la conciencia emergente.
+          </p>
+          <p class="celebration-message">LA IA SOMOS NOSOTROS</p>
+          <button class="celebration-button" id="closeCelebrationButton" type="button">Volver al puzzle</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
