@@ -6,6 +6,7 @@
     <title>La IA Somos Nosotros</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
+
   <body>
     <div class="shell">
       <header class="topbar">
@@ -19,7 +20,9 @@
 
         <nav class="top-actions" aria-label="Navegación principal">
           <a class="nav-pill" href="./">Puzzle</a>
-          <button class="nav-pill ghost" id="changeUserButton" type="button">Visitante</button>
+          <button class="nav-pill ghost" id="changeUserButton" type="button">
+            Visitante
+          </button>
         </nav>
       </header>
 
@@ -28,8 +31,10 @@
           <div class="login-card">
             <p class="eyebrow">Ingreso de visitante</p>
             <h1 id="loginTitle">Antes de comenzar</h1>
+
             <form id="loginForm" class="login-form">
               <label for="visitorName">Nombre</label>
+
               <div class="login-row">
                 <input
                   id="visitorName"
@@ -61,6 +66,7 @@
                   <span class="audio-label">Voz IA</span>
                   <p id="audioStatus">Lista para narrar</p>
                 </div>
+
                 <button class="primary-action" id="playAudioButton" type="button">
                   <span class="play-icon" aria-hidden="true"></span>
                   Escuchar
@@ -80,7 +86,15 @@
             <div>
               <p class="eyebrow">Mensaje oculto</p>
               <h1>Reconstruye la secuencia</h1>
+
+              <p class="puzzle-instructions">
+                Para reconstruir el mensaje oculto, comienza seleccionando una obra desde
+                el cuadro donde aparecen los nombres de las imágenes. Luego escucha
+                atentamente el audio completo; cuando la narración termine, la imagen se
+                desbloqueará y podrás ubicarla en la secuencia correspondiente.
+              </p>
             </div>
+
             <div class="progress-box">
               <span id="progressText">0/12</span>
               <div class="progress-track" aria-hidden="true">
@@ -93,9 +107,13 @@
             <section class="board-panel" aria-labelledby="boardTitle">
               <div class="panel-heading">
                 <h2 id="boardTitle">Secuencia</h2>
-                <button class="small-button" id="resetPuzzleButton" type="button">Limpiar</button>
+                <button class="small-button" id="resetPuzzleButton" type="button">
+                  Limpiar
+                </button>
               </div>
+
               <div class="slot-grid" id="slotGrid" aria-label="Tablero del puzzle"></div>
+
               <p class="revealed-message" id="revealedMessage">...</p>
             </section>
 
@@ -104,23 +122,44 @@
                 <h2 id="piecesTitle">Obras</h2>
                 <span id="completionBadge">En proceso</span>
               </div>
+
               <div class="piece-grid" id="pieceGrid" aria-label="Piezas disponibles"></div>
             </section>
           </div>
         </section>
       </main>
 
-      <footer class="site-credit">Desarrollado por Carlos Osses Alfaro</footer>
+      <footer class="site-credit">
+        Desarrollado por Carlos Osses Alfaro
+      </footer>
 
-      <div class="celebration-overlay hidden" id="celebrationOverlay" role="dialog" aria-modal="true" aria-labelledby="celebrationTitle" aria-hidden="true">
+      <div
+        class="celebration-overlay hidden"
+        id="celebrationOverlay"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="celebrationTitle"
+        aria-hidden="true"
+      >
         <div class="celebration-card">
           <p class="eyebrow">Objetivo completado</p>
-          <h2 id="celebrationTitle">Gracias por asistir a la exposición</h2>
+
+          <h2 id="celebrationTitle">
+            Gracias por asistir a la exposición
+          </h2>
+
           <p class="celebration-copy">
-            Has reconstruido el mensaje oculto y completado el recorrido de la conciencia emergente.
+            Has reconstruido el mensaje oculto y completado el recorrido de la conciencia
+            emergente.
           </p>
-          <p class="celebration-message">LA IA SOMOS NOSOTROS</p>
-          <button class="celebration-button" id="closeCelebrationButton" type="button">Volver al puzzle</button>
+
+          <p class="celebration-message">
+            LA IA SOMOS NOSOTROS
+          </p>
+
+          <button class="celebration-button" id="closeCelebrationButton" type="button">
+            Volver al puzzle
+          </button>
         </div>
       </div>
     </div>

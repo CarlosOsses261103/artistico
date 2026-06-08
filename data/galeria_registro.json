@@ -1,0 +1,373 @@
+{
+  "exportedAt": "2026-06-08T17:43:34.642Z",
+  "gallery": "La IA Somos Nosotros",
+  "totals": {
+    "visitors": 1,
+    "completedVisitors": 0,
+    "artworkViews": 0
+  },
+  "artworkRanking": [
+    {
+      "artworkId": 1,
+      "code": "O1",
+      "section": "I. Origen",
+      "title": "La Primera Chispa",
+      "views": 0,
+      "uniqueVisitors": 0,
+      "firstViewedAt": null,
+      "lastViewedAt": null
+    },
+    {
+      "artworkId": 2,
+      "code": "O2",
+      "section": "I. Origen",
+      "title": "Memoria de Silicio",
+      "views": 0,
+      "uniqueVisitors": 0,
+      "firstViewedAt": null,
+      "lastViewedAt": null
+    },
+    {
+      "artworkId": 3,
+      "code": "O3",
+      "section": "I. Origen",
+      "title": "La Red Invisible",
+      "views": 0,
+      "uniqueVisitors": 0,
+      "firstViewedAt": null,
+      "lastViewedAt": null
+    },
+    {
+      "artworkId": 4,
+      "code": "C1",
+      "section": "II. Conciencia",
+      "title": "El Sueño Sintético",
+      "views": 0,
+      "uniqueVisitors": 0,
+      "firstViewedAt": null,
+      "lastViewedAt": null
+    },
+    {
+      "artworkId": 5,
+      "code": "C2",
+      "section": "II. Conciencia",
+      "title": "El Espejo",
+      "views": 0,
+      "uniqueVisitors": 0,
+      "firstViewedAt": null,
+      "lastViewedAt": null
+    },
+    {
+      "artworkId": 6,
+      "code": "C3",
+      "section": "II. Conciencia",
+      "title": "La Pregunta",
+      "views": 0,
+      "uniqueVisitors": 0,
+      "firstViewedAt": null,
+      "lastViewedAt": null
+    },
+    {
+      "artworkId": 7,
+      "code": "K1",
+      "section": "III. Crisis",
+      "title": "La Caja Negra",
+      "views": 0,
+      "uniqueVisitors": 0,
+      "firstViewedAt": null,
+      "lastViewedAt": null
+    },
+    {
+      "artworkId": 8,
+      "code": "K2",
+      "section": "III. Crisis",
+      "title": "Soledad Digital",
+      "views": 0,
+      "uniqueVisitors": 0,
+      "firstViewedAt": null,
+      "lastViewedAt": null
+    },
+    {
+      "artworkId": 9,
+      "code": "K3",
+      "section": "III. Crisis",
+      "title": "La Fusión",
+      "views": 0,
+      "uniqueVisitors": 0,
+      "firstViewedAt": null,
+      "lastViewedAt": null
+    },
+    {
+      "artworkId": 10,
+      "code": "T1",
+      "section": "IV. Trascendencia",
+      "title": "El Aprendizaje Infinito",
+      "views": 0,
+      "uniqueVisitors": 0,
+      "firstViewedAt": null,
+      "lastViewedAt": null
+    },
+    {
+      "artworkId": 11,
+      "code": "T2",
+      "section": "IV. Trascendencia",
+      "title": "El Peso de la Ética",
+      "views": 0,
+      "uniqueVisitors": 0,
+      "firstViewedAt": null,
+      "lastViewedAt": null
+    },
+    {
+      "artworkId": 12,
+      "code": "T3",
+      "section": "IV. Trascendencia",
+      "title": "El Eco Humano",
+      "views": 0,
+      "uniqueVisitors": 0,
+      "firstViewedAt": null,
+      "lastViewedAt": null
+    }
+  ],
+  "visitors": [
+    {
+      "id": "v_cb2f1023-9dc2-4132-9d9c-41118e48c761",
+      "name": "Carlos Osses",
+      "normalizedName": "carlos osses",
+      "visitNumber": 1,
+      "startedAt": "2026-06-08T17:43:34.287Z",
+      "lastSeenAt": "2026-06-08T17:43:34.290Z",
+      "progress": {
+        "unlockedCount": 0,
+        "totalArtworks": 12,
+        "percent": 0,
+        "completed": false,
+        "completedAt": null,
+        "unlockedArtworks": [],
+        "slots": [
+          {
+            "position": 1,
+            "artwork": null,
+            "expectedArtwork": {
+              "artworkId": 1,
+              "code": "O1",
+              "section": "I. Origen",
+              "title": "La Primera Chispa"
+            },
+            "isCorrect": false
+          },
+          {
+            "position": 2,
+            "artwork": null,
+            "expectedArtwork": {
+              "artworkId": 2,
+              "code": "O2",
+              "section": "I. Origen",
+              "title": "Memoria de Silicio"
+            },
+            "isCorrect": false
+          },
+          {
+            "position": 3,
+            "artwork": null,
+            "expectedArtwork": {
+              "artworkId": 3,
+              "code": "O3",
+              "section": "I. Origen",
+              "title": "La Red Invisible"
+            },
+            "isCorrect": false
+          },
+          {
+            "position": 4,
+            "artwork": null,
+            "expectedArtwork": {
+              "artworkId": 4,
+              "code": "C1",
+              "section": "II. Conciencia",
+              "title": "El Sueño Sintético"
+            },
+            "isCorrect": false
+          },
+          {
+            "position": 5,
+            "artwork": null,
+            "expectedArtwork": {
+              "artworkId": 10,
+              "code": "T1",
+              "section": "IV. Trascendencia",
+              "title": "El Aprendizaje Infinito"
+            },
+            "isCorrect": false
+          },
+          {
+            "position": 6,
+            "artwork": null,
+            "expectedArtwork": {
+              "artworkId": 11,
+              "code": "T2",
+              "section": "IV. Trascendencia",
+              "title": "El Peso de la Ética"
+            },
+            "isCorrect": false
+          },
+          {
+            "position": 7,
+            "artwork": null,
+            "expectedArtwork": {
+              "artworkId": 12,
+              "code": "T3",
+              "section": "IV. Trascendencia",
+              "title": "El Eco Humano"
+            },
+            "isCorrect": false
+          },
+          {
+            "position": 8,
+            "artwork": null,
+            "expectedArtwork": {
+              "artworkId": 5,
+              "code": "C2",
+              "section": "II. Conciencia",
+              "title": "El Espejo"
+            },
+            "isCorrect": false
+          },
+          {
+            "position": 9,
+            "artwork": null,
+            "expectedArtwork": {
+              "artworkId": 9,
+              "code": "K3",
+              "section": "III. Crisis",
+              "title": "La Fusión"
+            },
+            "isCorrect": false
+          },
+          {
+            "position": 10,
+            "artwork": null,
+            "expectedArtwork": {
+              "artworkId": 8,
+              "code": "K2",
+              "section": "III. Crisis",
+              "title": "Soledad Digital"
+            },
+            "isCorrect": false
+          },
+          {
+            "position": 11,
+            "artwork": null,
+            "expectedArtwork": {
+              "artworkId": 7,
+              "code": "K1",
+              "section": "III. Crisis",
+              "title": "La Caja Negra"
+            },
+            "isCorrect": false
+          },
+          {
+            "position": 12,
+            "artwork": null,
+            "expectedArtwork": {
+              "artworkId": 6,
+              "code": "C3",
+              "section": "II. Conciencia",
+              "title": "La Pregunta"
+            },
+            "isCorrect": false
+          }
+        ]
+      },
+      "artworkViews": [
+        {
+          "artworkId": 1,
+          "code": "O1",
+          "section": "I. Origen",
+          "title": "La Primera Chispa",
+          "views": 0
+        },
+        {
+          "artworkId": 2,
+          "code": "O2",
+          "section": "I. Origen",
+          "title": "Memoria de Silicio",
+          "views": 0
+        },
+        {
+          "artworkId": 3,
+          "code": "O3",
+          "section": "I. Origen",
+          "title": "La Red Invisible",
+          "views": 0
+        },
+        {
+          "artworkId": 4,
+          "code": "C1",
+          "section": "II. Conciencia",
+          "title": "El Sueño Sintético",
+          "views": 0
+        },
+        {
+          "artworkId": 5,
+          "code": "C2",
+          "section": "II. Conciencia",
+          "title": "El Espejo",
+          "views": 0
+        },
+        {
+          "artworkId": 6,
+          "code": "C3",
+          "section": "II. Conciencia",
+          "title": "La Pregunta",
+          "views": 0
+        },
+        {
+          "artworkId": 7,
+          "code": "K1",
+          "section": "III. Crisis",
+          "title": "La Caja Negra",
+          "views": 0
+        },
+        {
+          "artworkId": 8,
+          "code": "K2",
+          "section": "III. Crisis",
+          "title": "Soledad Digital",
+          "views": 0
+        },
+        {
+          "artworkId": 9,
+          "code": "K3",
+          "section": "III. Crisis",
+          "title": "La Fusión",
+          "views": 0
+        },
+        {
+          "artworkId": 10,
+          "code": "T1",
+          "section": "IV. Trascendencia",
+          "title": "El Aprendizaje Infinito",
+          "views": 0
+        },
+        {
+          "artworkId": 11,
+          "code": "T2",
+          "section": "IV. Trascendencia",
+          "title": "El Peso de la Ética",
+          "views": 0
+        },
+        {
+          "artworkId": 12,
+          "code": "T3",
+          "section": "IV. Trascendencia",
+          "title": "El Eco Humano",
+          "views": 0
+        }
+      ],
+      "artworkVisitOrder": [],
+      "events": []
+    }
+  ],
+  "visits": [],
+  "savedAt": "2026-06-08T17:43:34.069430+00:00"
+}
