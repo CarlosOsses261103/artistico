@@ -788,3 +788,11 @@ a {
     width: 100%;
   }
 }
+
+.puzzle-instructions {
+  margin-top: 0.75rem;
+  max-width: 720px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+}
