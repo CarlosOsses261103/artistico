@@ -252,6 +252,7 @@ function defaultState() {
     slots: Array(secretSequence.length).fill(null),
     completed: false,
     completedAt: null,
+    celebrationShown: false,
     artworkViews: {},
     artworkVisitLog: [],
     unlockedAt: {},
@@ -270,6 +271,7 @@ function normalizeStoredState(parsed) {
   state.slots = Array.from({ length: secretSequence.length }, (_, index) => Number(state.slots?.[index]) || null);
   state.completed = Boolean(state.completed);
   state.completedAt = state.completedAt || null;
+  state.celebrationShown = Boolean(state.celebrationShown);
   state.artworkViews = isPlainObject(state.artworkViews) ? state.artworkViews : {};
   state.artworkVisitLog = Array.isArray(state.artworkVisitLog) ? state.artworkVisitLog : [];
   state.unlockedAt = isPlainObject(state.unlockedAt) ? state.unlockedAt : {};
@@ -691,14 +693,18 @@ function movePieceToSlot(pieceId, slotIndex) {
   renderPuzzle();
 }
 
-function updateMessagePreview(state) {
-  const raw = state.slots
+function getMessageRaw(state) {
+  return state.slots
     .map((artworkId, index) => {
       const artwork = getArtwork(artworkId);
       const expectedArtwork = getArtwork(secretSequence[index]);
       return artwork ? artwork.letters : "_".repeat(expectedArtwork.letters.length);
     })
     .join("");
+}
+
+function updateMessagePreview(state) {
+  const raw = getMessageRaw(state);
 
   elements.revealedMessage.textContent = formatRevealed(raw);
 }
@@ -710,7 +716,8 @@ function formatRevealed(raw) {
 
 function updateCompletion(state) {
   const wasComplete = Boolean(state.completed);
-  const complete = state.slots.every((artworkId, index) => artworkId === secretSequence[index]);
+  const complete = getMessageRaw(state) === compactTargetMessage;
+  const shouldShowCelebration = complete && !state.celebrationShown;
   state.completed = complete;
   elements.completionBadge.textContent = complete ? "Mensaje revelado" : "En proceso";
   elements.completionBadge.classList.toggle("complete", complete);
@@ -725,9 +732,12 @@ function updateCompletion(state) {
       });
     }
     elements.revealedMessage.textContent = targetMessage;
-    if (!wasComplete) {
+    if (shouldShowCelebration) {
+      state.celebrationShown = true;
       window.setTimeout(showCelebration, 180);
     }
+  } else {
+    state.celebrationShown = false;
   }
 }
 
@@ -894,6 +904,7 @@ elements.resetPuzzleButton.addEventListener("click", () => {
   const state = getState();
   state.slots = Array(secretSequence.length).fill(null);
   state.completed = false;
+  state.celebrationShown = false;
   selectedPieceId = null;
   hideCelebration();
   appendProgressEvent(state, {
