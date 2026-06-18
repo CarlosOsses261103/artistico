@@ -386,7 +386,7 @@ function renderArtwork(artwork) {
   elements.playAudioButton.disabled = false;
   elements.playAudioButton.textContent = unlocked ? "Escuchar otra vez" : "Escuchar";
   elements.playAudioButton.prepend(createPlayIcon());
-  elements.unlockBadge.textContent = unlocked ? "Pieza desbloqueada" : "Pieza bloqueada";
+  elements.unlockBadge.textContent = unlocked ? "!Pieza desbloqueada!Ahora vuelve al puzzle y ubícala en la secuencia" : "  Escucha el audio completo para desbloquear esta pieza";
   elements.unlockBadge.classList.toggle("unlocked", unlocked);
 }
 
