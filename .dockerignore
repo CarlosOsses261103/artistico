@@ -13,28 +13,31 @@ credentials*.json
 *.p12
 *.p8
 
-__pycache__/
+venv
+.venv
+.venv-codex
+env
+__pycache__
 **/__pycache__/
-*.py[cod]
-.venv/
-.venv-codex/
-venv/
-env/
+*.pyc
+*.pyo
+*.pyd
+
+.git
+.github
+.codex
+.agents
+.vscode
+.idea
 
 db.sqlite3
 *.sqlite3
-staticfiles/
+staticfiles
 data/galeria_registro.json
 data/*.tmp
-
-.agents/
-.codex/
-.vscode/
-.idea/
 
 *.log
 *.tmp
 *.bak
-.pytest_cache/
 Thumbs.db
 .DS_Store

@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 import os
 from pathlib import Path
 import re
@@ -34,9 +35,32 @@ def get_credentials_path():
     return Path(__file__).resolve().parents[1] / path
 
 
+def get_google_credentials(service_account):
+    credentials_json = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON", "").strip()
+    if credentials_json:
+        try:
+            credentials_info = json.loads(credentials_json)
+        except json.JSONDecodeError as exc:
+            raise RuntimeError("GOOGLE_SERVICE_ACCOUNT_JSON no contiene un JSON valido") from exc
+
+        return service_account.Credentials.from_service_account_info(
+            credentials_info,
+            scopes=SCOPES,
+        )
+
+    credentials_path = get_credentials_path()
+    if not credentials_path.exists():
+        raise RuntimeError(f"No se encontro el archivo de credenciales: {credentials_path}")
+
+    return service_account.Credentials.from_service_account_file(
+        str(credentials_path),
+        scopes=SCOPES,
+    )
+
+
 def get_sheets_values_resource():
     try:
-        from google.oauth2.service_account import Credentials
+        from google.oauth2 import service_account
         from googleapiclient.discovery import build
     except ImportError as exc:
         raise RuntimeError(
@@ -47,11 +71,7 @@ def get_sheets_values_resource():
     if not sheet_id:
         raise RuntimeError("Falta configurar GOOGLE_SHEET_ID en el archivo .env")
 
-    credentials_path = get_credentials_path()
-    if not credentials_path.exists():
-        raise RuntimeError(f"No se encontro el archivo de credenciales: {credentials_path}")
-
-    credentials = Credentials.from_service_account_file(str(credentials_path), scopes=SCOPES)
+    credentials = get_google_credentials(service_account)
     service = build("sheets", "v4", credentials=credentials)
     return service.spreadsheets().values(), sheet_id
 
