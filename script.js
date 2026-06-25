@@ -124,6 +124,20 @@ const artworks = [
 const secretSequence = [1, 2, 3, 4, 10, 11, 12, 5, 9, 8, 7, 6];
 const targetMessage = "LA IA SOMOS NOSOTROS";
 const compactTargetMessage = targetMessage.replace(/\s+/g, "");
+const sheetArtworkNames = {
+  1: "Primera Obra",
+  2: "Segunda Obra",
+  3: "Tercera obra",
+  4: "Cuarta Obra",
+  5: "Quinta Obra",
+  6: "Sexta Obra",
+  7: "Septima Obra",
+  8: "Octava Obra",
+  9: "Novena Obra",
+  10: "Decima Obra",
+  11: "Onceava Obra",
+  12: "Doceava Obra",
+};
 const legacyProfileKey = "ia_exhibit_active_name";
 const activeVisitorKey = "ia_exhibit_active_visitor_id";
 const visitorRegistryKey = "ia_exhibit_visitors";
@@ -386,7 +400,7 @@ function renderArtwork(artwork) {
   elements.playAudioButton.disabled = false;
   elements.playAudioButton.textContent = unlocked ? "Escuchar otra vez" : "Escuchar";
   elements.playAudioButton.prepend(createPlayIcon());
-  elements.unlockBadge.textContent = unlocked ? "!Pieza desbloqueada!Ahora vuelve al puzzle y ubícala en la secuencia" : "  Escucha el audio completo para desbloquear esta pieza";
+  elements.unlockBadge.textContent = unlocked ? "Pieza desbloqueada" : "Pieza bloqueada";
   elements.unlockBadge.classList.toggle("unlocked", unlocked);
 }
 
@@ -454,6 +468,7 @@ function unlockArtwork(artworkId) {
       happenedAt: unlockedAt,
     });
     setState(state);
+    registrarObraDesbloqueada(getSheetArtworkName(artwork));
   }
 }
 
@@ -567,6 +582,10 @@ function renderPuzzle() {
 
 function getArtwork(artworkId) {
   return artworks.find((artwork) => artwork.id === artworkId);
+}
+
+function getSheetArtworkName(artwork) {
+  return artwork ? sheetArtworkNames[artwork.id] || artwork.title : "";
 }
 
 function createPieceCard(artwork, inSlot, unlocked) {
@@ -847,6 +866,82 @@ function canUseLocalDatabase() {
   return window.location.protocol === "http:" || window.location.protocol === "https:";
 }
 
+function getCookie(name) {
+  return document.cookie
+    .split(";")
+    .map((cookie) => cookie.trim())
+    .find((cookie) => cookie.startsWith(`${name}=`))
+    ?.slice(name.length + 1) || "";
+}
+
+function handleRegistroResponse(response) {
+  if (response.ok) return;
+
+  return response
+    .json()
+    .catch(() => ({}))
+    .then((payload) => {
+      throw new Error(payload.error || `HTTP ${response.status}`);
+    });
+}
+
+function registrarUsuario(nombreUsuario) {
+  if (!canUseLocalDatabase() || !("fetch" in window)) return;
+  if (!nombreUsuario) return;
+
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  const csrfToken = getCookie("csrftoken");
+  if (csrfToken) {
+    headers["X-CSRFToken"] = decodeURIComponent(csrfToken);
+  }
+
+  fetch("/registrar-usuario/", {
+    method: "POST",
+    credentials: "same-origin",
+    headers,
+    body: JSON.stringify({
+      nombre_usuario: nombreUsuario,
+    }),
+    keepalive: true,
+  })
+    .then(handleRegistroResponse)
+    .catch((error) => {
+      console.warn("No se pudo registrar el usuario en Google Sheets.", error);
+    });
+}
+
+function registrarObraDesbloqueada(nombreObra) {
+  if (!canUseLocalDatabase() || !("fetch" in window)) return;
+
+  const nombreUsuario = getVisitorName();
+  if (!nombreUsuario || !nombreObra) return;
+
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  const csrfToken = getCookie("csrftoken");
+  if (csrfToken) {
+    headers["X-CSRFToken"] = decodeURIComponent(csrfToken);
+  }
+
+  fetch("/registrar-desbloqueo/", {
+    method: "POST",
+    credentials: "same-origin",
+    headers,
+    body: JSON.stringify({
+      obra: nombreObra,
+      nombre_usuario: nombreUsuario,
+    }),
+    keepalive: true,
+  })
+    .then(handleRegistroResponse)
+    .catch((error) => {
+      console.warn("No se pudo registrar el desbloqueo en Google Sheets.", error);
+    });
+}
+
 function scheduleDatabaseSync() {
   if (!canUseLocalDatabase()) return;
 
@@ -885,6 +980,7 @@ elements.loginForm.addEventListener("submit", (event) => {
   if (!name) return;
 
   createVisitor(name);
+  registrarUsuario(name);
   route();
 });
 
@@ -934,5 +1030,3 @@ if ("speechSynthesis" in window) {
   window.speechSynthesis.getVoices();
 }
 route();
-
-

@@ -4,9 +4,15 @@ import argparse
 from datetime import datetime, timezone
 import errno
 import json
+import os
 import re
 import sys
 from urllib.parse import urlparse
+
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    load_dotenv = None
 
 
 ROOT = Path(__file__).resolve().parent
@@ -16,20 +22,37 @@ DATA_DIR = ROOT / "data"
 DATABASE_FILE = DATA_DIR / "galeria_registro.json"
 MAX_POST_BYTES = 5 * 1024 * 1024
 
+if load_dotenv:
+    load_dotenv(ROOT / ".env")
+
 
 class ExhibitHandler(SimpleHTTPRequestHandler):
     def do_POST(self):
         parsed = urlparse(self.path)
-        if parsed.path == "/api/registro":
+        clean_path = parsed.path.rstrip("/") or "/"
+        if clean_path == "/api/registro":
             self.save_gallery_record()
+            return
+
+        if clean_path == "/registrar-desbloqueo":
+            self.registrar_desbloqueo_view()
+            return
+
+        if clean_path == "/registrar-usuario":
+            self.registrar_usuario_view()
             return
 
         self.send_error(404, "Ruta no encontrada")
 
     def do_GET(self):
         parsed = urlparse(self.path)
+        clean_path = parsed.path.rstrip("/") or "/"
         if self.is_private_path(parsed.path):
             self.send_error(403, "Archivo privado")
+            return
+
+        if clean_path == "/prueba-sheets":
+            self.prueba_sheets()
             return
 
         match = re.fullmatch(r"/obra/(\d+)/?", parsed.path)
@@ -51,6 +74,26 @@ class ExhibitHandler(SimpleHTTPRequestHandler):
 
     def is_private_path(self, path):
         return path == "/data" or path.startswith("/data/")
+
+    def read_json_payload(self):
+        try:
+            content_length = int(self.headers.get("Content-Length", "0"))
+        except ValueError:
+            return None, "Content-Length invalido", 400
+
+        if content_length <= 0 or content_length > MAX_POST_BYTES:
+            return None, "Registro demasiado grande", 413
+
+        try:
+            raw_body = self.rfile.read(content_length).decode("utf-8")
+            payload = json.loads(raw_body)
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            return None, "JSON invalido", 400
+
+        if not isinstance(payload, dict):
+            return None, "Registro invalido", 400
+
+        return payload, None, 200
 
     def save_gallery_record(self):
         try:
@@ -82,6 +125,61 @@ class ExhibitHandler(SimpleHTTPRequestHandler):
 
         self.send_json({"ok": True})
 
+    def registrar_desbloqueo_view(self):
+        payload, error, status = self.read_json_payload()
+        if error:
+            self.send_json({"ok": False, "error": error}, status)
+            return
+
+        nombre_obra = payload.get("obra") or payload.get("nombre_obra")
+        nombre_usuario = payload.get("nombre_usuario") or payload.get("usuario")
+        if not nombre_obra:
+            self.send_json({"ok": False, "error": "Falta el campo 'obra'"}, 400)
+            return
+        if not nombre_usuario:
+            self.send_json({"ok": False, "error": "Falta el nombre del usuario"}, 400)
+            return
+
+        try:
+            from services.google_sheets import registrar_desbloqueo
+
+            result = registrar_desbloqueo(nombre_usuario, nombre_obra)
+            self.send_json(result)
+        except Exception as exc:
+            self.send_json({"ok": False, "error": str(exc)}, 500)
+
+    def registrar_usuario_view(self):
+        payload, error, status = self.read_json_payload()
+        if error:
+            self.send_json({"ok": False, "error": error}, status)
+            return
+
+        nombre_usuario = payload.get("nombre_usuario") or payload.get("usuario") or payload.get("nombre")
+        if not nombre_usuario:
+            self.send_json({"ok": False, "error": "Falta el nombre del usuario"}, 400)
+            return
+
+        try:
+            from services.google_sheets import registrar_usuario
+
+            result = registrar_usuario(nombre_usuario)
+            self.send_json(result)
+        except Exception as exc:
+            self.send_json({"ok": False, "error": str(exc)}, 500)
+
+    def prueba_sheets(self):
+        if not is_debug_enabled():
+            self.send_error(404, "Ruta no encontrada")
+            return
+
+        try:
+            from services.google_sheets import registrar_desbloqueo
+
+            result = registrar_desbloqueo("Usuario de prueba", "Primera Obra")
+            self.send_json(result)
+        except Exception as exc:
+            self.send_json({"ok": False, "error": str(exc)}, 500)
+
     def send_json(self, payload, status=200):
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
@@ -110,6 +208,10 @@ def build_parser():
     parser.add_argument("--host", default=DEFAULT_HOST)
     parser.add_argument("--port", type=int, default=DEFAULT_PORT)
     return parser
+
+
+def is_debug_enabled():
+    return os.getenv("DEBUG", "False").strip().lower() in {"1", "true", "yes", "on"}
 
 
 def create_server(host, preferred_port):
